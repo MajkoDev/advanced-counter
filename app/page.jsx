@@ -9,7 +9,7 @@ export default function Home() {
       </h2>
 
       <div className="w-full flex flex-col md:flex-row justify-evenly items-center">
-        <div className="md:order-1 flex flex-col gap-y-2 items-center m-8">
+        <div className="md:order-1 flex flex-col gap-y-2 items-center m-4 md:m-8">
           <div className="flex flex-row gap-x-2">
             <Input placeholder="+1" className="w-16 text-center font-medium" />
             <Button className="w-36" variant="outline">
@@ -35,7 +35,7 @@ export default function Home() {
           <h1 className="text-center text-7xl font-extrabold">0</h1>
         </div>
 
-        <div className="md:order-3 flex flex-col gap-y-2 items-center m-8">
+        <div className="md:order-3 flex flex-col gap-y-2 items-center m-4 md:m-8">
           <div className="flex flex-row gap-x-2">
             <Input placeholder="*4" className="w-16 text-center font-medium" />
             <Button className="w-36" variant="outline">
