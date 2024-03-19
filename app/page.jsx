@@ -9,12 +9,14 @@ import { CounterContext } from "@/context/counter-context";
 
 export default function Home() {
   const {
-    state,
+    count,
     handleValueChange,
     increment,
     decrement,
+    multiplication,
+    division,
+    exponentiation,
     reset,
-    dispatch,
   } = useContext(CounterContext);
 
   return (
@@ -56,7 +58,7 @@ export default function Home() {
 
         <div className="order-first md:order-2">
           <h1 className="text-center text-7xl font-extrabold">
-            {formatNumber(state.count)}
+            {formatNumber(count)}
           </h1>
         </div>
 
@@ -67,11 +69,7 @@ export default function Home() {
               className="w-16 text-center font-medium"
               onChange={(e) => handleValueChange(e, "multiplication")}
             />
-            <Button
-              className="w-36"
-              variant="outline"
-              onClick={() => dispatch({ type: "MULTIPLICATION" })}
-            >
+            <Button className="w-36" variant="outline" onClick={multiplication}>
               Multiplication
             </Button>
           </div>
@@ -80,16 +78,9 @@ export default function Home() {
             <Input
               placeholder="/3"
               className="w-16 text-center font-medium"
-              onChange={(e) => {
-                handleValueChange(e, "division"),
-                  console.log(state.value.division);
-              }}
+              onChange={(e) => handleValueChange(e, "division")}
             />
-            <Button
-              className="w-36"
-              variant="outline"
-              onClick={() => dispatch({ type: "DIVISION" })}
-            >
+            <Button className="w-36" variant="outline" onClick={division}>
               Division
             </Button>
           </div>
@@ -100,11 +91,7 @@ export default function Home() {
               className="w-16 text-center font-medium"
               onChange={(e) => handleValueChange(e, "exponentiation")}
             />
-            <Button
-              className="w-36"
-              variant="outline"
-              onClick={() => dispatch({ type: "EXPONENTIATION" })}
-            >
+            <Button className="w-36" variant="outline" onClick={exponentiation}>
               Exponentiation
             </Button>
           </div>
