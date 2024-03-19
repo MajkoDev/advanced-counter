@@ -1,58 +1,74 @@
 "use client";
 
-import { createContext, useState } from "react";
+import { createContext, useState, useReducer } from "react";
+
+// reducer function
+function reducer(state, action) {
+  switch (action.type) {
+    case "VALUE_CHANGE":
+      return {
+        ...state,
+        value: { ...state.value, [action.operation]: action.value },
+      };
+    case "INCREMENT":
+      return { ...state, count: state.count + state.value.increment };
+    case "DECREMENT":
+      return { ...state, count: state.count - state.value.increment };
+    case "MULTIPLICATION":
+      return { ...state, count: state.count * state.value.multiplication };
+    case "DIVISION":
+      return { ...state, count: state.count / state.value.division };
+    case "EXPONENTIATION":
+      return { ...state, count: state.count ** state.value.exponentiation };
+    case "RESET":
+      return { ...state, count: 0 };
+    default:
+      return state;
+  }
+}
 
 export const CounterContext = createContext(null);
 
 export const CounterProvider = ({ children }) => {
-  const [count, setCount] = useState(3);
-
-  const [value, setValue] = useState({
-    increment: 1,
-    decrement: 1,
-    multiplication: 4,
-    division: 3,
-    exponentiation: 2,
+  // useReducer hook
+  const [state, dispatch] = useReducer(reducer, {
+    count: 0,
+    value: {
+      increment: 1,
+      decrement: 1,
+      multiplication: 4,
+      division: 3,
+      exponentiation: 2,
+    },
   });
 
   const handleValueChange = (e, operation) => {
-    setValue((prevValue) => ({
-      ...prevValue,
-      [operation]: parseInt(e.target.value),
-    }));
+    dispatch({
+      type: "VALUE_CHANGE",
+      operation: operation,
+      value: parseInt(e.target.value),
+    });
   };
 
   function increment() {
-    setCount((prevCount) => (prevCount += value.increment));
+    dispatch({ type: "INCREMENT" });
   }
-  const decrement = () => {
-    setCount((prevCount) => prevCount - value.decrement);
-  };
-  function multiplication() {
-    setCount((prevCount) => (prevCount *= value.multiplication));
+  function decrement() {
+    dispatch({ type: "DECREMENT" });
   }
-  function division() {
-    setCount((prevCount) => (prevCount /= value.division));
-  }
-  function exponentiation() {
-    setCount((prevCount) => (prevCount **= value.exponentiation));
-  }
-
   function reset() {
-    setCount(0);
+    dispatch({ type: "RESET" });
   }
 
   return (
     <CounterContext.Provider
       value={{
-        count,
+        state,
         handleValueChange,
         increment,
         decrement,
-        multiplication,
-        division,
-        exponentiation,
         reset,
+        dispatch,
       }}
     >
       {children}
