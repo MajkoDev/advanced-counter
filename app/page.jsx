@@ -2,45 +2,26 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
+import { CounterStore } from "./store";
 import { formatNumber } from "@/lib/format-number";
-import { useState } from "react";
 
 export default function Home() {
-  const [count, setCount] = useState(2);
-  const [value, setValue] = useState({
-    increment: 1,
-    decrement: 1,
-    multiplication: 4,
-    division: 3,
-    exponentiation: 2,
-  });
+  const {
+    count,
+    setValue,
+    increment,
+    decrement,
+    reset,
+    multiplication,
+    division,
+    exponentiation,
+  } = CounterStore();
 
   const handleValueChange = (e, operation) => {
-    setValue((prevValue) => ({
-      ...prevValue,
-      [operation]: parseInt(e.target.value),
-    }));
+    setValue(operation, parseInt(e.target.value));
   };
 
-  function increment() {
-    setCount((prevCount) => (prevCount += value.increment));
-  }
-  const decrement = () => {
-    setCount((prevCount) => prevCount - value.decrement);
-  };
-  function multiplication() {
-    setCount((prevCount) => (prevCount *= value.multiplication));
-  }
-  function division() {
-    setCount((prevCount) => (prevCount /= value.division));
-  }
-  function exponentiation() {
-    setCount((prevCount) => (prevCount **= value.exponentiation));
-  }
-
-  function reset() {
-    setCount(0);
-  }
   return (
     <main className="">
       <h2 className="text-center text-3xl font-extralight mt-12 mb-4">
