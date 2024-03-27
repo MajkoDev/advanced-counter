@@ -3,23 +3,26 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import { CounterStore } from "./store";
 import { formatNumber } from "@/lib/format-number";
 
+// redux toolkit
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setValue,
+  increment,
+  decrement,
+  multiplication,
+  division,
+  exponentiation,
+  reset,
+} from "@/redux/counterSlice";
+
 export default function Home() {
-  const {
-    count,
-    setValue,
-    increment,
-    decrement,
-    reset,
-    multiplication,
-    division,
-    exponentiation,
-  } = CounterStore();
+  const { count } = useSelector((state) => state.counter);
+  const dispatch = useDispatch();
 
   const handleValueChange = (e, operation) => {
-    setValue(operation, parseInt(e.target.value));
+    dispatch(setValue({ operation, newValue: parseInt(e.target.value) }));
   };
 
   return (
@@ -36,7 +39,11 @@ export default function Home() {
               className="w-16 text-center font-medium"
               onChange={(e) => handleValueChange(e, "increment")}
             />
-            <Button className="w-36" variant="outline" onClick={increment}>
+            <Button
+              className="w-36"
+              variant="outline"
+              onClick={() => dispatch(increment())}
+            >
               Addition
             </Button>
           </div>
@@ -47,13 +54,21 @@ export default function Home() {
               className="w-16 text-center font-medium"
               onChange={(e) => handleValueChange(e, "decrement")}
             />
-            <Button className="w-36" variant="outline" onClick={decrement}>
+            <Button
+              className="w-36"
+              variant="outline"
+              onClick={() => dispatch(decrement())}
+            >
               Subtraction
             </Button>
           </div>
 
           <div className="flex flex-row gap-x-2">
-            <Button className="w-44" variant="destructive" onClick={reset}>
+            <Button
+              className="w-44"
+              variant="destructive"
+              onClick={() => dispatch(reset())}
+            >
               Reset
             </Button>
           </div>
@@ -72,7 +87,11 @@ export default function Home() {
               className="w-16 text-center font-medium"
               onChange={(e) => handleValueChange(e, "multiplication")}
             />
-            <Button className="w-36" variant="outline" onClick={multiplication}>
+            <Button
+              className="w-36"
+              variant="outline"
+              onClick={() => dispatch(multiplication())}
+            >
               Multiplication
             </Button>
           </div>
@@ -83,7 +102,11 @@ export default function Home() {
               className="w-16 text-center font-medium"
               onChange={(e) => handleValueChange(e, "division")}
             />
-            <Button className="w-36" variant="outline" onClick={division}>
+            <Button
+              className="w-36"
+              variant="outline"
+              onClick={() => dispatch(division())}
+            >
               Division
             </Button>
           </div>
@@ -94,7 +117,11 @@ export default function Home() {
               className="w-16 text-center font-medium"
               onChange={(e) => handleValueChange(e, "exponentiation")}
             />
-            <Button className="w-36" variant="outline" onClick={exponentiation}>
+            <Button
+              className="w-36"
+              variant="outline"
+              onClick={() => dispatch(exponentiation())}
+            >
               Exponentiation
             </Button>
           </div>
